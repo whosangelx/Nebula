@@ -78,7 +78,7 @@
             box-shadow: var(--focus);
         }
 
-        /* Toasts & Modals (Mantidos funcionais, visual adaptado) */
+        /* Toasts & Modals */
         .app-status { position: fixed; right: 20px; top: 20px; width: min(400px, calc(100vw - 40px)); z-index: 5000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
         .toast { background: rgba(30, 30, 30, 0.95); border-left: 4px solid var(--accent-color); color: white; padding: 14px 16px; border-radius: 12px; box-shadow: var(--shadow); backdrop-filter: blur(14px); font-size: 14px; animation: toastIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .toast.success { border-left-color: var(--success); }
@@ -138,7 +138,7 @@
         .app-topbar { display: none; }
         .sidebar-backdrop { display: none; }
 
-        /* Sidebar - Visual Clean */
+        /* Sidebar */
         .sidebar {
             background: rgba(15, 15, 15, 0.6);
             border-right: 1px solid rgba(255, 255, 255, 0.05);
@@ -176,7 +176,6 @@
         .menu-item i { font-size: 18px; width: 24px; text-align: center; }
         .menu-item:hover { color: white; }
         
-        /* Estilo ativo limpo estilo Apple Music */
         .menu-item.active {
             color: var(--accent-color);
             background: rgba(250, 36, 60, 0.1);
@@ -235,7 +234,7 @@
 
         /* Conteúdo Principal */
         .main-content {
-            padding: 40px 50px 120px 50px; /* Espaço inferior para o player flutuante */
+            padding: 40px 50px 120px 50px;
             overflow-y: auto;
             position: relative;
         }
@@ -288,7 +287,7 @@
             align-items: center;
         }
 
-        /* GRID E CARDS - Estilo Vertical Refinado */
+        /* GRID E CARDS */
         .songs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -302,7 +301,7 @@
             border-radius: 16px;
             cursor: pointer;
             position: relative;
-            aspect-ratio: 0.85; /* Mais alto que largo */
+            aspect-ratio: 0.85;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -325,7 +324,6 @@
             z-index: 1;
         }
 
-        /* Degradê para o texto aparecer bem na imagem */
         .card::after {
             content: '';
             position: absolute;
@@ -359,7 +357,6 @@
             font-weight: 500;
         }
 
-        /* Botões de ação do Card */
         .fav-card-btn, .remove-card-btn, .delete-owner-btn {
             position: absolute;
             top: 15px;
@@ -378,7 +375,7 @@
         .fav-card-btn.active { opacity: 1; color: var(--accent-color); }
         .fav-card-btn:hover { background: rgba(255, 255, 255, 0.2); }
 
-        /* PLAYER FLUTUANTE INSPIRADO NA IMAGEM 2 */
+        /* PLAYER FLUTUANTE */
         .player-bar {
             position: fixed;
             bottom: 25px;
@@ -414,7 +411,6 @@
             flex-grow: 1; display: flex; align-items: center; justify-content: center; gap: 15px;
         }
 
-        /* Botões decorativos para "mais opções" */
         .extra-icon {
             color: var(--text-gray); font-size: 16px; cursor: pointer; transition: 0.2s; padding: 10px; border-radius: 50%;
         }
@@ -438,7 +434,7 @@
         .empty-state { text-align: center; color: var(--text-gray); padding: 40px 20px; border: 1px dashed rgba(255, 255, 255, 0.1); border-radius: 20px; }
         .empty-state i { font-size: 30px; margin-bottom: 12px; display: block; opacity: 0.5; }
 
-        /* RESPONSIVIDADE ARRUMADA PARA CELULAR */
+        /* RESPONSIVIDADE PARA CELULAR */
         @media (max-width: 1024px) {
             .songs-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
             .player-bar { width: 95%; }
@@ -466,15 +462,13 @@
                 transform: translateX(-105%); z-index: 900; padding: 20px;
             }
             .sidebar.open { transform: translateX(0); }
-            .sidebar-tools .collapse-icon { display: none; } /* Esconde o recolher no mobile */
+            .sidebar-tools .collapse-icon { display: none; }
 
             .main-content { padding: 20px 20px 140px 20px; grid-column: 1; grid-row: 2; }
             
-            /* Ajuste Cards Mobile - Duas colunas certinhas */
             .songs-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
             .card h3 { font-size: 15px; } .card p { font-size: 12px; }
 
-            /* Player Flutuante Mobile */
             .player-bar {
                 bottom: 15px; width: calc(100% - 30px);
                 flex-wrap: wrap; padding: 10px 15px; justify-content: center; border-radius: 20px;
@@ -495,7 +489,9 @@
 </head>
 
 <body>
-    <div class="ambient-glow"></div> <div class="app-status" id="app-status" aria-live="polite" aria-atomic="true"></div>
+    <div class="ambient-glow"></div>
+    
+    <div class="app-status" id="app-status" aria-live="polite" aria-atomic="true"></div>
 
     <div id="auth-screen" class="modal-overlay" style="display: flex;">
         <div class="modal-box auth-box" role="dialog" aria-modal="true" aria-labelledby="auth-title">
@@ -525,24 +521,96 @@
         </div>
     </div>
 
-    <div id="custom-prompt" class="modal-overlay"><div class="modal-box"><h3 id="prompt-title">Título</h3><input type="text" id="prompt-input" placeholder="..."><div class="modal-buttons"><button class="btn-secondary" onclick="fecharModais()">Cancelar</button><button class="btn-primary" id="prompt-confirm-btn">Confirmar</button></div></div></div>
-    <div id="custom-confirm" class="modal-overlay"><div class="modal-box"><h3 id="confirm-title">Tem certeza?</h3><p id="confirm-msg">Ação irreversível.</p><div class="modal-buttons"><button class="btn-secondary" onclick="fecharModais()">Cancelar</button><button class="btn-danger" id="confirm-yes-btn">Excluir</button></div></div></div>
-    
-    <div id="modal-upload-song" class="modal-overlay">
-        <div class="modal-box" style="width: min(500px, 100%);">
-            <h3 id="modal-upload-title">Subir Música</h3>
-            <div class="input-group"><input type="text" id="new-title" placeholder="Nome da música *" required></div>
-            <div class="input-group"><input type="text" id="new-artist" placeholder="Artista"></div>
-            <div class="input-group"><input type="text" id="new-album" placeholder="Álbum"></div>
-            <div class="input-group"><input type="text" id="new-genre" placeholder="Gênero"></div>
-            <div class="file-input-group"><label>Áudio (.mp3) *</label><input type="file" id="new-audio-file" accept="audio/*" required></div>
-            <div class="file-input-group"><label>Capa (.jpg/png)</label><input type="file" id="new-cover-file" accept="image/*"></div>
-            <div class="modal-buttons"><button class="btn-secondary" onclick="fecharModais()">Cancelar</button><button class="btn-primary" id="btn-upload-song" onclick="salvarMusicaNoBanco()">Enviar</button></div>
+    <div id="custom-prompt" class="modal-overlay">
+        <div class="modal-box" role="dialog" aria-modal="true">
+            <h3 id="prompt-title">Título</h3>
+            <div class="input-group">
+                <label for="prompt-input" id="prompt-label">Preencha o campo</label>
+                <input type="text" id="prompt-input" placeholder="...">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-secondary" onclick="fecharModais()">Cancelar</button>
+                <button class="btn-primary" id="prompt-confirm-btn">Confirmar</button>
+            </div>
         </div>
     </div>
 
-    <div id="modal-select-playlist" class="modal-overlay"><div class="modal-box"><h3 id="modal-select-playlist-title">Salvar Música</h3><p>Adicionar <b id="song-to-add-name" style="color:white"></b> em:</p><div class="scroll-list" id="modal-playlist-select-list"></div><div class="modal-buttons"><button class="btn-secondary" onclick="fecharModais()">Cancelar</button></div></div></div>
+    <div id="custom-confirm" class="modal-overlay">
+        <div class="modal-box" role="dialog" aria-modal="true">
+            <h3 id="confirm-title">Tem certeza?</h3>
+            <p id="confirm-msg">Essa ação não pode ser desfeita.</p>
+            <div class="modal-buttons">
+                <button class="btn-secondary" onclick="fecharModais()">Cancelar</button>
+                <button class="btn-danger" id="confirm-yes-btn">Sim, excluir</button>
+            </div>
+        </div>
+    </div>
 
+    <div id="modal-add-song" class="modal-overlay">
+        <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-add-song-title">
+            <h3 id="modal-add-song-title">Adicionar à Playlist</h3>
+            <p>Escolha uma música da biblioteca.</p>
+            <div class="scroll-list" id="modal-song-list"></div>
+            <div class="modal-buttons">
+                <button class="btn-secondary" onclick="fecharModais()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-select-playlist" class="modal-overlay">
+        <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-select-playlist-title">
+            <h3 id="modal-select-playlist-title">Salvar Música</h3>
+            <p>Adicionar <b id="song-to-add-name" style="color:white"></b> em:</p>
+            <div class="scroll-list" id="modal-playlist-select-list"></div>
+            <div class="modal-buttons">
+                <button class="btn-secondary" onclick="fecharModais()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-upload-song" class="modal-overlay">
+        <div class="modal-box" style="width: min(520px, 100%);" role="dialog" aria-modal="true" aria-labelledby="modal-upload-title">
+            <h3 id="modal-upload-title">Subir Nova Música</h3>
+            <p>Preencha as informações e selecione os arquivos do seu computador.</p>
+
+            <div class="input-group">
+                <label for="new-title">Nome da música *</label>
+                <input type="text" id="new-title" placeholder="Ex: Blinding Lights" required>
+            </div>
+
+            <div class="input-group">
+                <label for="new-artist">Artista</label>
+                <input type="text" id="new-artist" placeholder="Ex: The Weeknd">
+            </div>
+
+            <div class="input-group">
+                <label for="new-album">Álbum</label>
+                <input type="text" id="new-album" placeholder="Ex: After Hours">
+            </div>
+
+            <div class="input-group">
+                <label for="new-genre">Gênero</label>
+                <input type="text" id="new-genre" placeholder="Ex: Pop">
+            </div>
+
+            <div class="file-input-group">
+                <label for="new-audio-file">Arquivo de áudio (.mp3) *</label>
+                <input type="file" id="new-audio-file" accept="audio/*" required>
+            </div>
+
+            <div class="file-input-group">
+                <label for="new-cover-file">Capa (.jpg/.png)</label>
+                <input type="file" id="new-cover-file" accept="image/*">
+            </div>
+
+            <p class="helper-text" style="color: var(--text-gray); font-size: 13px;">Campos com * são obrigatórios.</p>
+
+            <div class="modal-buttons">
+                <button class="btn-secondary" onclick="fecharModais()">Cancelar</button>
+                <button class="btn-primary" id="btn-upload-song" onclick="salvarMusicaNoBanco()">Enviar</button>
+            </div>
+        </div>
+    </div>
 
     <div id="app-container">
         <header class="app-topbar">
@@ -602,7 +670,8 @@
                     <h1 class="playlist-big-title" id="playlist-title-text">Minha Playlist</h1>
                     <i class="fas fa-pencil-alt btn-action-icon" onclick="editarNomePlaylistPrompt()"></i>
                 </div>
-                <p style="color: var(--text-gray); font-size: 14px; margin-bottom: 10px;">Criada por você</p>
+                <p style="color: var(--text-gray); font-size: 14px; margin-bottom: 10px;">Playlist pessoal • Criada por você</p>
+                <button class="btn-add-music-hero" onclick="abrirModalMusicas()">+ Adicionar Músicas</button>
             </section>
 
             <h2 class="section-title" id="page-title">Descobrir</h2>
@@ -631,8 +700,1010 @@
     </div>
 
     <script>
-        // ... COLE O SEU JAVASCRIPT AQUI (Do const SERVER_URL = '...' até o iniciarInterface();)
-        // O código JS continua compatível pois as IDs e Classes essenciais não foram removidas.
+        const SERVER_URL = 'https://nebula-jkkk.onrender.com';
+        const API_URL = `${SERVER_URL}/api`;
+
+        function arquivoUrl(caminho) {
+            if (!caminho) return '';
+
+            if (caminho.startsWith('http://') || caminho.startsWith('https://')) {
+                return caminho;
+            }
+
+            if (caminho.startsWith('/')) {
+                return SERVER_URL + caminho;
+            }
+
+            return SERVER_URL + '/' + caminho;
+        }
+
+        let currentUser = null;
+        let allSongs = [];
+        let userPlaylists = [];
+        let isRegisterMode = false;
+        let favoritos = [];
+        let currentView = 'descobrir';
+        let openPlaylistId = null;
+        let currentPlayingSong = null;
+
+        function escapeHTML(valor) {
+            return String(valor ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
+
+        function escapeAttr(valor) {
+            return escapeHTML(valor).replaceAll('`', '&#096;');
+        }
+
+        function getSongKey(musica) {
+            return String(musica?._id || musica?.title || '');
+        }
+
+        function showFeedback(message, type = 'info', duration = 3600) {
+            const area = document.getElementById('app-status');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            area.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-8px)';
+                toast.style.transition = '0.2s ease';
+
+                setTimeout(() => {
+                    toast.remove();
+                }, 220);
+            }, duration);
+        }
+
+        function setButtonLoading(button, isLoading, loadingText = 'Carregando...') {
+            if (!button) return;
+
+            if (isLoading) {
+                button.dataset.originalText = button.innerHTML;
+                button.disabled = true;
+                button.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> ${loadingText}`;
+            } else {
+                button.disabled = false;
+                button.innerHTML = button.dataset.originalText || button.innerHTML;
+            }
+        }
+
+        async function parseJsonSafe(response) {
+            try {
+                return await response.json();
+            } catch {
+                return {};
+            }
+        }
+
+        function handleMenuKey(event, aba) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                navegar(aba);
+            }
+        }
+
+        function fecharModais() {
+            document.querySelectorAll('.modal-overlay').forEach(el => {
+                if (el.id !== 'auth-screen') el.style.display = 'none';
+            });
+        }
+
+        function abrirPrompt(titulo, placeholder, callback) {
+            const modal = document.getElementById('custom-prompt');
+            const input = document.getElementById('prompt-input');
+            const btn = document.getElementById('prompt-confirm-btn');
+
+            document.getElementById('prompt-title').innerText = titulo;
+            
+            const label = document.getElementById('prompt-label');
+            if(label) label.innerText = titulo;
+            
+            input.placeholder = placeholder;
+            input.value = '';
+
+            const novoBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(novoBtn, btn);
+
+            novoBtn.onclick = () => {
+                if (input.value.trim()) {
+                    callback(input.value.trim());
+                    fecharModais();
+                } else {
+                    showFeedback('Preencha o campo antes de confirmar.', 'warning');
+                    input.focus();
+                }
+            };
+
+            input.onkeyup = (e) => {
+                if (e.key === 'Enter') novoBtn.click();
+            };
+
+            modal.style.display = 'flex';
+            setTimeout(() => input.focus(), 80);
+        }
+
+        function abrirConfirm(titulo, mensagem, textoBotao, callback) {
+            const modal = document.getElementById('custom-confirm');
+            const btn = document.getElementById('confirm-yes-btn');
+
+            document.getElementById('confirm-title').innerText = titulo;
+            document.getElementById('confirm-msg').innerText = mensagem;
+            btn.innerText = textoBotao;
+
+            if (textoBotao === 'Sair') btn.style.backgroundColor = '#444';
+            else btn.style.backgroundColor = '';
+
+            const novoBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(novoBtn, btn);
+
+            novoBtn.onclick = () => {
+                callback();
+                fecharModais();
+            };
+
+            modal.style.display = 'flex';
+        }
+
+        function abrirModalUpload() {
+            if (!currentUser) {
+                showFeedback('Faça login para subir uma música.', 'warning');
+                document.getElementById('auth-screen').style.display = 'flex';
+                return;
+            }
+
+            ['new-title', 'new-artist', 'new-album', 'new-genre'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+
+            document.getElementById('new-audio-file').value = '';
+            document.getElementById('new-cover-file').value = '';
+            document.getElementById('modal-upload-song').style.display = 'flex';
+            fecharSidebarMobile();
+        }
+
+        async function salvarMusicaNoBanco() {
+            if (!currentUser) {
+                showFeedback('Sessão expirada. Faça login novamente.', 'warning');
+                document.getElementById('auth-screen').style.display = 'flex';
+                return;
+            }
+
+            const title = document.getElementById('new-title').value.trim();
+            const audioFile = document.getElementById('new-audio-file').files[0];
+            const coverFile = document.getElementById('new-cover-file').files[0];
+            const btn = document.getElementById('btn-upload-song');
+
+            if (!title || !audioFile) {
+                showFeedback('Título e arquivo de áudio são obrigatórios.', 'warning');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('artist', document.getElementById('new-artist').value.trim() || 'Desconhecido');
+            formData.append('album', document.getElementById('new-album').value.trim() || 'Single');
+            formData.append('genre', document.getElementById('new-genre').value.trim() || 'Geral');
+            formData.append('audioFile', audioFile);
+
+            if (coverFile) {
+                formData.append('coverFile', coverFile);
+            }
+
+            formData.append('userId', currentUser._id);
+
+            try {
+                setButtonLoading(btn, true, 'Enviando...');
+
+                const res = await fetch(API_URL + '/songs', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await parseJsonSafe(res);
+
+                if (res.ok) {
+                    showFeedback('Upload realizado com sucesso.', 'success');
+                    fecharModais();
+                    await carregarMusicas();
+                } else {
+                    showFeedback(data.message || 'Erro ao enviar música.', 'error');
+                }
+            } catch (e) {
+                console.error('Erro detalhado do upload:', e);
+                showFeedback('Erro de conexão. Verifique o backend no Render.', 'error');
+            } finally {
+                setButtonLoading(btn, false);
+            }
+        }
+
+        function checkSession() {
+            const savedUser = localStorage.getItem('nebula_user');
+
+            if (savedUser) {
+                try {
+                    currentUser = JSON.parse(savedUser);
+                    iniciarApp();
+                } catch (e) {
+                    localStorage.removeItem('nebula_user');
+                    showFeedback('Sessão anterior inválida. Faça login novamente.', 'warning');
+                }
+            }
+        }
+
+        function carregarFavoritos() {
+            if (!currentUser) return;
+
+            const key = `nebula_favoritos_${currentUser.username}`;
+            favoritos = JSON.parse(localStorage.getItem(key)) || [];
+        }
+
+        function salvarFavoritos() {
+            if (!currentUser) return;
+
+            const key = `nebula_favoritos_${currentUser.username}`;
+            localStorage.setItem(key, JSON.stringify(favoritos));
+        }
+
+        function toggleAuthMode() {
+            isRegisterMode = !isRegisterMode;
+
+            document.getElementById('auth-title').innerText = isRegisterMode ? 'Criar Conta' : 'Nebula';
+            document.getElementById('auth-user-group').style.display = isRegisterMode ? 'block' : 'none';
+            document.querySelector('.auth-btn').innerText = isRegisterMode ? 'Cadastrar' : 'Entrar';
+            document.querySelector('.toggle-link').innerText = isRegisterMode ? 'Já tem conta? Entrar' : 'Não tem conta? Crie uma agora';
+            document.getElementById('auth-helper').innerText = isRegisterMode
+                ? 'Crie sua conta para salvar músicas, playlists e favoritos.'
+                : 'Entre para salvar músicas e criar playlists.';
+        }
+
+        async function handleAuth() {
+            const email = document.getElementById('auth-email').value.trim();
+            const pass = document.getElementById('auth-pass').value;
+            const username = document.getElementById('auth-user').value.trim();
+            const btn = document.getElementById('auth-submit-btn');
+
+            if (!email || !pass) {
+                showFeedback('Preencha e-mail e senha.', 'warning');
+                return;
+            }
+
+            if (isRegisterMode && !username) {
+                showFeedback('Informe um nome de usuário para cadastrar.', 'warning');
+                return;
+            }
+
+            const endpoint = isRegisterMode ? '/users/register' : '/users/login';
+            const body = isRegisterMode
+                ? { username, email, password: pass }
+                : { email, password: pass };
+
+            try {
+                setButtonLoading(btn, true, isRegisterMode ? 'Cadastrando...' : 'Entrando...');
+
+                const res = await fetch(API_URL + endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await parseJsonSafe(res);
+
+                if (res.ok) {
+                    currentUser = data;
+                    localStorage.setItem('nebula_user', JSON.stringify(data));
+                    showFeedback(isRegisterMode ? 'Conta criada com sucesso.' : 'Login realizado com sucesso.', 'success');
+                    iniciarApp();
+                } else {
+                    showFeedback(data.message || 'Não foi possível autenticar.', 'error');
+                }
+            } catch (e) {
+                console.error(e);
+                showFeedback('Erro de conexão ao tentar logar. Verifique o backend online.', 'error');
+            } finally {
+                setButtonLoading(btn, false);
+            }
+        }
+
+        function confirmarLogout() {
+            abrirConfirm('Sair da conta?', 'Você terá que fazer login novamente.', 'Sair', () => {
+                localStorage.removeItem('nebula_user');
+                location.reload();
+            });
+        }
+
+        function iniciarApp() {
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('app-container').style.display = 'grid';
+            document.getElementById('user-name-display').innerText = currentUser.username || 'Usuário';
+
+            carregarFavoritos();
+            carregarMusicas();
+            carregarPlaylists();
+        }
+
+        async function carregarMusicas() {
+            const grid = document.getElementById('main-grid');
+            grid.innerHTML = `<div class="empty-state"><i class="fas fa-circle-notch fa-spin"></i>Carregando músicas...</div>`;
+
+            try {
+                const res = await fetch(API_URL + '/songs');
+                const songs = await res.json();
+
+                allSongs = Array.isArray(songs) ? songs : [];
+                navegar(currentView);
+            } catch (e) {
+                console.error('Erro ao carregar músicas:', e);
+                grid.innerHTML = `<div class="empty-state"><i class="fas fa-triangle-exclamation"></i>Não foi possível carregar as músicas.</div>`;
+                showFeedback('Erro ao carregar músicas do servidor.', 'error');
+            }
+        }
+
+        async function carregarPlaylists() {
+            if (!currentUser) return;
+
+            const container = document.getElementById('playlist-list-container');
+            container.innerHTML = '<p style="color:var(--text-gray); font-size:13px; padding:10px;">Carregando...</p>';
+
+            try {
+                const res = await fetch(`${API_URL}/playlists?userId=${encodeURIComponent(currentUser._id)}`);
+                userPlaylists = await res.json();
+
+                if (!Array.isArray(userPlaylists)) {
+                    userPlaylists = [];
+                }
+
+                container.innerHTML = '';
+
+                if (userPlaylists.length === 0) {
+                    container.innerHTML = '<p style="color:var(--text-gray); font-size:13px; padding:10px;">Nenhuma playlist criada.</p>';
+                    return;
+                }
+
+                userPlaylists.forEach(pl => {
+                    const div = document.createElement('div');
+                    div.className = 'playlist-row';
+                    div.tabIndex = 0;
+                    div.setAttribute('role', 'button');
+                    div.setAttribute('title', pl.name || 'Playlist');
+
+                    div.innerHTML = `
+                        <span>
+                            <i class="fas fa-music" style="margin-right:8px;"></i>
+                            ${escapeHTML(pl.name)}
+                        </span>
+                        <i class="fas fa-trash btn-delete-pl" tabindex="0" role="button" aria-label="Excluir playlist ${escapeAttr(pl.name)}" title="Excluir playlist"></i>
+                    `;
+
+                    div.onclick = (e) => {
+                        if (!e.target.classList.contains('btn-delete-pl')) {
+                            abrirPlaylist(pl._id);
+                        }
+                    };
+
+                    div.onkeydown = (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            abrirPlaylist(pl._id);
+                        }
+                    };
+
+                    div.querySelector('.btn-delete-pl').onclick = (event) => deletarPlaylist(event, pl._id);
+
+                    container.appendChild(div);
+                });
+            } catch (e) {
+                console.error(e);
+                container.innerHTML = '<p style="color:#ff9d9d; font-size:13px; padding:10px;">Erro ao carregar playlists.</p>';
+            }
+        }
+
+        function criarPlaylistPrompt() {
+            abrirPrompt('Nova Playlist', 'Digite o nome da playlist...', (nome) => {
+                criarPlaylist(nome);
+            });
+        }
+
+        async function criarPlaylist(nome) {
+            if (!currentUser) {
+                showFeedback('Faça login para criar playlists.', 'warning');
+                return;
+            }
+
+            try {
+                const res = await fetch(API_URL + '/playlists', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: nome, user: currentUser._id })
+                });
+
+                if (res.ok) {
+                    showFeedback('Playlist criada com sucesso.', 'success');
+                    carregarPlaylists();
+                } else {
+                    const data = await parseJsonSafe(res);
+                    showFeedback(data.message || 'Erro ao criar playlist.', 'error');
+                }
+            } catch {
+                showFeedback('Erro de conexão ao criar playlist.', 'error');
+            }
+        }
+
+        function deletarPlaylist(e, id) {
+            e.stopPropagation();
+
+            abrirConfirm('Excluir Playlist?', 'Todas as músicas da lista serão removidas.', 'Excluir', async () => {
+                try {
+                    await fetch(`${API_URL}/playlists/${id}`, { method: 'DELETE' });
+                    showFeedback('Playlist excluída.', 'success');
+                    carregarPlaylists();
+
+                    if (openPlaylistId === id) {
+                        navegar('descobrir');
+                    }
+                } catch {
+                    showFeedback('Erro ao excluir playlist.', 'error');
+                }
+            });
+        }
+
+        async function abrirPlaylist(id) {
+            currentView = 'playlist';
+            openPlaylistId = id;
+            fecharSidebarMobile();
+
+            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('playlist-header-area').classList.add('active');
+            document.getElementById('page-title').style.display = 'none';
+
+            const grid = document.getElementById('main-grid');
+            grid.innerHTML = `<div class="empty-state"><i class="fas fa-circle-notch fa-spin"></i>Carregando playlist...</div>`;
+
+            try {
+                const res = await fetch(`${API_URL}/playlists/${id}`);
+                const playlist = await res.json();
+
+                document.getElementById('playlist-title-text').innerText = playlist.name || 'Minha Playlist';
+                grid.innerHTML = '';
+
+                if (!playlist.songs || playlist.songs.length === 0) {
+                    grid.innerHTML = '<div class="empty-state"><i class="fas fa-music"></i>Playlist vazia. Adicione músicas para começar.</div>';
+                    return;
+                }
+
+                playlist.songs.forEach(musica => {
+                    const card = document.createElement('article');
+                    card.className = 'card';
+                    card.tabIndex = 0;
+
+                    card.innerHTML = `
+                        <div class="remove-card-btn" title="Remover da playlist" aria-label="Remover da playlist">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                        <img src="${escapeAttr(arquivoUrl(musica.coverImageUrl))}" alt="Capa da música ${escapeAttr(musica.title)}">
+                        <h3>${escapeHTML(musica.title)}</h3>
+                        <p>${escapeHTML(musica.artist)}</p>
+                    `;
+
+                    card.querySelector('.remove-card-btn').onclick = (event) => removerMusicaPlaylist(event, musica._id);
+
+                    card.onclick = (e) => {
+                        if (!e.target.closest('.remove-card-btn')) {
+                            tocarMusica(musica);
+                        }
+                    };
+
+                    card.onkeydown = (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            tocarMusica(musica);
+                        }
+                    };
+
+                    grid.appendChild(card);
+                });
+            } catch {
+                grid.innerHTML = '<div class="empty-state"><i class="fas fa-triangle-exclamation"></i>Erro ao abrir playlist.</div>';
+                showFeedback('Erro ao carregar playlist.', 'error');
+            }
+        }
+
+        function editarNomePlaylistPrompt() {
+            abrirPrompt('Renomear Playlist', 'Novo nome...', (novoNome) => {
+                editarNomePlaylist(novoNome);
+            });
+        }
+
+        async function editarNomePlaylist(novoNome) {
+            try {
+                await fetch(`${API_URL}/playlists/${openPlaylistId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: novoNome })
+                });
+
+                showFeedback('Playlist renomeada.', 'success');
+                carregarPlaylists();
+                document.getElementById('playlist-title-text').innerText = novoNome;
+            } catch {
+                showFeedback('Erro ao renomear playlist.', 'error');
+            }
+        }
+
+        function deletarMusicaGlobal(e, songId) {
+            e.stopPropagation();
+
+            abrirConfirm(
+                'Apagar Música?',
+                'Essa ação apagará a música permanentemente para todos os usuários.',
+                'Sim, Apagar',
+                async () => {
+                    try {
+                        const res = await fetch(`${API_URL}/songs/${songId}`, {
+                            method: 'DELETE',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ userId: currentUser._id })
+                        });
+
+                        const data = await parseJsonSafe(res);
+
+                        if (res.ok) {
+                            showFeedback('Música apagada com sucesso.', 'success');
+                            carregarMusicas();
+                        } else {
+                            showFeedback(data.message || 'Erro ao apagar música.', 'error');
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        showFeedback('Erro ao conectar com o servidor.', 'error');
+                    }
+                }
+            );
+        }
+
+        function abrirModalMusicas() {
+            const lista = document.getElementById('modal-song-list');
+            lista.innerHTML = '';
+
+            if (!allSongs.length) {
+                lista.innerHTML = '<p style="color:var(--text-gray); padding:12px;">Nenhuma música disponível.</p>';
+            }
+
+            allSongs.forEach(musica => {
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                item.tabIndex = 0;
+                item.setAttribute('role', 'button');
+
+                item.innerHTML = `
+                    <span>${escapeHTML(musica.title)} - ${escapeHTML(musica.artist)}</span>
+                    <button class="btn-mini">Add</button>
+                `;
+
+                item.onclick = () => adicionarMusicaPlaylist(musica._id);
+                item.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        adicionarMusicaPlaylist(musica._id);
+                    }
+                };
+
+                lista.appendChild(item);
+            });
+
+            document.getElementById('modal-add-song').style.display = 'flex';
+        }
+
+        async function adicionarMusicaPlaylist(songId) {
+            try {
+                await fetch(`${API_URL}/playlists/${openPlaylistId}/songs`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ songId })
+                });
+
+                showFeedback('Música adicionada à playlist.', 'success');
+                abrirPlaylist(openPlaylistId);
+                fecharModais();
+            } catch {
+                showFeedback('Erro ao adicionar música.', 'error');
+            }
+        }
+
+        function removerMusicaPlaylist(e, songId) {
+            e.stopPropagation();
+
+            abrirConfirm('Remover Música?', 'Quer tirar essa música da playlist?', 'Remover', async () => {
+                try {
+                    await fetch(`${API_URL}/playlists/${openPlaylistId}/songs/${songId}`, {
+                        method: 'DELETE'
+                    });
+
+                    showFeedback('Música removida da playlist.', 'success');
+                    abrirPlaylist(openPlaylistId);
+                } catch {
+                    showFeedback('Erro ao remover música.', 'error');
+                }
+            });
+        }
+
+        function abrirModalSelecaoPlaylist() {
+            if (!currentPlayingSong) return;
+
+            document.getElementById('song-to-add-name').innerText = currentPlayingSong.title;
+
+            const lista = document.getElementById('modal-playlist-select-list');
+            lista.innerHTML = '';
+
+            if (userPlaylists.length === 0) {
+                lista.innerHTML = '<p style="color:var(--text-gray); padding:10px;">Crie uma playlist primeiro.</p>';
+            }
+
+            userPlaylists.forEach(pl => {
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                item.tabIndex = 0;
+                item.setAttribute('role', 'button');
+
+                item.innerHTML = `
+                    <span>${escapeHTML(pl.name)}</span>
+                    <button class="btn-mini">Salvar</button>
+                `;
+
+                item.onclick = () => salvarMusicaTocando(pl._id);
+                item.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        salvarMusicaTocando(pl._id);
+                    }
+                };
+
+                lista.appendChild(item);
+            });
+
+            document.getElementById('modal-select-playlist').style.display = 'flex';
+        }
+
+        async function salvarMusicaTocando(playlistId) {
+            try {
+                await fetch(`${API_URL}/playlists/${playlistId}/songs`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ songId: currentPlayingSong._id })
+                });
+
+                fecharModais();
+                showFeedback('Música salva na playlist.', 'success');
+
+                const btn = document.getElementById('btn-player-add');
+                btn.style.color = '#30d158';
+
+                setTimeout(() => {
+                    btn.style.color = '';
+                }, 1000);
+            } catch {
+                showFeedback('Erro ao salvar música na playlist.', 'error');
+            }
+        }
+
+        function navegar(aba) {
+            currentView = aba;
+            openPlaylistId = null;
+            fecharSidebarMobile();
+
+            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+
+            if (document.getElementById(`btn-${aba}`)) {
+                document.getElementById(`btn-${aba}`).classList.add('active');
+            }
+
+            document.getElementById('playlist-header-area').classList.remove('active');
+            document.getElementById('page-title').style.display = 'flex';
+
+            const title = document.getElementById('page-title');
+
+            if (aba === 'descobrir') {
+                title.innerText = 'Descobrir';
+                renderizarGrid(allSongs);
+            } else if (aba === 'em-alta') {
+                title.innerText = 'Em Alta 🔥';
+                const emAlta = [...allSongs].sort((a, b) => (b.likes || 0) - (a.likes || 0));
+                renderizarGrid(emAlta);
+            } else if (aba === 'albuns') {
+                title.innerText = 'Álbuns';
+                renderizarAlbuns();
+            } else if (aba === 'favoritos') {
+                title.innerText = 'Favoritos ❤️';
+                const favs = allSongs.filter(m => {
+                    const key = getSongKey(m);
+                    return favoritos.includes(key) || favoritos.includes(m.title);
+                });
+                renderizarGrid(favs);
+            }
+
+            document.getElementById('main-content').scrollTop = 0;
+        }
+
+        function renderizarGrid(lista) {
+            const grid = document.getElementById('main-grid');
+            grid.innerHTML = '';
+
+            if (!lista || lista.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><i class="fas fa-music"></i>Nenhuma música encontrada.</div>';
+                return;
+            }
+
+            lista.forEach(m => {
+                const songKey = getSongKey(m);
+                const isFav = favoritos.includes(songKey) || favoritos.includes(m.title);
+
+                let isOwner = false;
+
+                if (currentUser && m.uploadedBy) {
+                    isOwner = (m.uploadedBy === currentUser._id);
+                }
+
+                const deleteBtnHtml = isOwner
+                    ? `<div class="delete-owner-btn" title="Apagar Música" aria-label="Apagar música"><i class="fas fa-trash-alt"></i></div>`
+                    : '';
+
+                const card = document.createElement('article');
+                card.className = 'card';
+                card.tabIndex = 0;
+
+                card.innerHTML = `
+                    ${deleteBtnHtml}
+                    <div class="fav-card-btn ${isFav ? 'active' : ''}" title="${isFav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}" aria-label="${isFav ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}">
+                        <i class="${isFav ? 'fas' : 'far'} fa-heart"></i>
+                    </div>
+                    <img src="${escapeAttr(arquivoUrl(m.coverImageUrl))}" alt="Capa da música ${escapeAttr(m.title)}">
+                    <h3>${escapeHTML(m.title)}</h3>
+                    <p>${escapeHTML(m.artist)}</p>
+                `;
+
+                const favBtn = card.querySelector('.fav-card-btn');
+                favBtn.onclick = (event) => toggleFav(event, songKey);
+
+                const deleteBtn = card.querySelector('.delete-owner-btn');
+                if (deleteBtn) {
+                    deleteBtn.onclick = (event) => deletarMusicaGlobal(event, m._id);
+                }
+
+                card.onclick = (e) => {
+                    if (!e.target.closest('.fav-card-btn') && !e.target.closest('.delete-owner-btn')) {
+                        tocarMusica(m);
+                    }
+                };
+
+                card.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        tocarMusica(m);
+                    }
+                };
+
+                grid.appendChild(card);
+            });
+        }
+
+        function renderizarAlbuns() {
+            const grid = document.getElementById('main-grid');
+            grid.innerHTML = '';
+
+            const albuns = {};
+
+            allSongs.forEach(m => {
+                const nomeAlbum = m.album || 'Single';
+
+                if (!albuns[nomeAlbum]) {
+                    albuns[nomeAlbum] = {
+                        title: nomeAlbum,
+                        cover: arquivoUrl(m.coverImageUrl),
+                        artist: m.artist || 'Artista desconhecido'
+                    };
+                }
+            });
+
+            const listaAlbuns = Object.values(albuns);
+
+            if (listaAlbuns.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><i class="fas fa-record-vinyl"></i>Nenhum álbum encontrado.</div>';
+                return;
+            }
+
+            listaAlbuns.forEach(a => {
+                const card = document.createElement('article');
+                card.className = 'card';
+                card.tabIndex = 0;
+
+                card.innerHTML = `
+                    <img src="${escapeAttr(a.cover)}" alt="Capa do álbum ${escapeAttr(a.title)}">
+                    <h3>${escapeHTML(a.title)}</h3>
+                    <p>${escapeHTML(a.artist)}</p>
+                `;
+
+                card.onclick = () => {
+                    document.getElementById('page-title').innerText = `Álbum: ${a.title}`;
+                    renderizarGrid(allSongs.filter(m => (m.album || 'Single') === a.title));
+                };
+
+                card.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        card.click();
+                    }
+                };
+
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleFav(e, songKey) {
+            e.stopPropagation();
+
+            if (favoritos.includes(songKey)) {
+                favoritos = favoritos.filter(f => f !== songKey);
+                showFeedback('Removido dos favoritos.', 'success');
+            } else {
+                favoritos.push(songKey);
+                showFeedback('Adicionado aos favoritos.', 'success');
+            }
+
+            favoritos = [...new Set(favoritos)];
+            salvarFavoritos();
+
+            if (currentView === 'favoritos') {
+                navegar('favoritos');
+            } else {
+                e.currentTarget.classList.toggle('active');
+
+                const icon = e.currentTarget.querySelector('i');
+                icon.classList.toggle('fas');
+                icon.classList.toggle('far');
+
+                const active = e.currentTarget.classList.contains('active');
+                e.currentTarget.setAttribute('title', active ? 'Remover dos favoritos' : 'Adicionar aos favoritos');
+                e.currentTarget.setAttribute('aria-label', active ? 'Remover dos favoritos' : 'Adicionar aos favoritos');
+            }
+        }
+
+        function tocarMusica(m) {
+            currentPlayingSong = m;
+
+            const audioPlayer = document.getElementById('audio-player');
+            audioPlayer.src = arquivoUrl(m.audioUrl);
+
+            audioPlayer.play().catch(() => {
+                showFeedback('Clique novamente para iniciar a reprodução.', 'warning');
+            });
+
+            document.getElementById('now-playing').innerHTML = `
+                <img src="${escapeAttr(arquivoUrl(m.coverImageUrl))}" alt="Capa da música ${escapeAttr(m.title)}">
+                <div class="track-info">
+                    <div>${escapeHTML(m.title)}</div>
+                    <div>${escapeHTML(m.artist)}</div>
+                </div>
+            `;
+
+            const btnAdd = document.getElementById('btn-player-add');
+            btnAdd.classList.add('active');
+        }
+
+        function configurarBusca() {
+            document.getElementById('searchInput').addEventListener('keyup', (e) => {
+                const v = e.target.value.toLowerCase().trim();
+
+                if (v) {
+                    document.getElementById('page-title').innerText = 'Busca';
+
+                    renderizarGrid(
+                        allSongs.filter(m =>
+                            String(m.title || '').toLowerCase().includes(v) ||
+                            String(m.artist || '').toLowerCase().includes(v) ||
+                            String(m.album || '').toLowerCase().includes(v)
+                        )
+                    );
+                } else {
+                    navegar('descobrir');
+                }
+            });
+        }
+
+        function configurarOlhinhos() {
+            const btn = document.getElementById('toggle-auth-pass');
+            const input = document.getElementById('auth-pass');
+
+            btn.addEventListener('click', () => {
+                const mostrando = input.type === 'text';
+                input.type = mostrando ? 'password' : 'text';
+
+                btn.innerHTML = mostrando
+                    ? '<i class="far fa-eye"></i>'
+                    : '<i class="far fa-eye-slash"></i>';
+
+                btn.setAttribute('aria-label', mostrando ? 'Mostrar senha' : 'Ocultar senha');
+                btn.setAttribute('title', mostrando ? 'Mostrar senha' : 'Ocultar senha');
+            });
+        }
+
+        function configurarSidebar() {
+            const app = document.getElementById('app-container');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            const collapseBtn = document.getElementById('sidebar-collapse-btn');
+            const mobileBtn = document.getElementById('mobile-sidebar-btn');
+
+            collapseBtn.addEventListener('click', () => {
+                if (window.innerWidth <= 860) {
+                    fecharSidebarMobile();
+                    return;
+                }
+
+                app.classList.toggle('sidebar-collapsed');
+
+                const collapsed = app.classList.contains('sidebar-collapsed');
+                collapseBtn.setAttribute('aria-label', collapsed ? 'Expandir menu lateral' : 'Recolher menu lateral para a esquerda');
+                collapseBtn.setAttribute('title', collapsed ? 'Expandir menu' : 'Recolher menu');
+            });
+
+            mobileBtn.addEventListener('click', () => {
+                sidebar.classList.add('open');
+                backdrop.classList.add('active');
+                mobileBtn.setAttribute('aria-expanded', 'true');
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 860) {
+                    fecharSidebarMobile();
+                }
+            });
+        }
+
+        function fecharSidebarMobile() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            const mobileBtn = document.getElementById('mobile-sidebar-btn');
+
+            sidebar.classList.remove('open');
+            backdrop.classList.remove('active');
+
+            if (mobileBtn) {
+                mobileBtn.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        function configurarFechamentoPorTeclado() {
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    fecharModais();
+                    fecharSidebarMobile();
+                }
+            });
+
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.addEventListener('click', (event) => {
+                    if (event.target === modal && modal.id !== 'auth-screen') {
+                        fecharModais();
+                    }
+                });
+            });
+        }
+
+        function iniciarInterface() {
+            configurarBusca();
+            configurarOlhinhos();
+            configurarSidebar();
+            configurarFechamentoPorTeclado();
+            checkSession();
+        }
+
+        iniciarInterface();
     </script>
 </body>
 </html>
